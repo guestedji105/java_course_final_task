@@ -1,0 +1,4 @@
+output.txt
+target/
+*.class
+.idea/
