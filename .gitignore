@@ -2,3 +2,4 @@ output.txt
 target/
 *.class
 .idea/
+*.mp4
