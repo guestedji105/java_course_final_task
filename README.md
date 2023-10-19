@@ -15,11 +15,13 @@ import java.io.IOException;
 public class WriteCSVExample {
     public static void main(String[] args) {
         // Укажите путь и имя CSV файла
+        // Укажите путь и имя CSV файла
         String csvFilePath = "sample.csv";
 
         try (FileWriter writer = new FileWriter(csvFilePath)) {
             // Определите данные для записи в файл
             String[] header = {"Name", "Age", "City"};
+            // Определите данные для записи в файл
             String[] row1 = {"Alice", "30", "New York"};
             String[] row2 = {"Bob", "25", "San Francisco"};
             String[] row3 = {"Charlie", "35", "Los Angeles"};
