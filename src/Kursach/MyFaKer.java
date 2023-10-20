@@ -1,6 +1,8 @@
 package Kursach;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -89,7 +91,7 @@ public class MyFaKer {
             writer.append("\n");
 
             for (int i = 0; i < numberOfLine; i++) {
-                int n= i;
+                int n = i;
                 for (int j = 0; j < counterLine; j++) {
                     writer.append(listTable.get(n));
                     n = n + numberOfLine;
@@ -100,15 +102,20 @@ public class MyFaKer {
                     }
                 }
             }
-            System.out.println("CSV файл успешно создан. Он находиться по адресу "+csvFilePath);
+            System.out.println("CSV файл успешно создан. Он находиться по адресу " + csvFilePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    //генерация дня рождения !!!ДОДЕЛАТЬ!!!
+    //генерация дня рождения
     public String creationDataOfBirth() {
-        return "01.01.1978";
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        int min = 365 * 20;
+        int max = 365 * 100;
+        int randomNumber = random.nextInt(max - min + 1) + min;
+        LocalDate oldDate = LocalDate.now().minusDays(randomNumber);
+        return oldDate.format(dtf);
     }
 
     //запись слов из текстового файла в лист
@@ -128,7 +135,7 @@ public class MyFaKer {
     //генерация телефонного номера
     public String creationPhoneNumber() {
         StringBuilder numberPhone = new StringBuilder();
-        List<String> listAllCodeCountry = writeFromFileTxtToCollection(fileName);
+        List<String> listAllCodeCountry = writeFromFileTxtToCollection(fileCountryCode);
         int randomCode = random.nextInt(listAllCodeCountry.size() - 1);
         numberPhone.append("+");
         numberPhone.append(randomCode);
@@ -141,7 +148,7 @@ public class MyFaKer {
 
     //генерация одного Имени из файла
     public String creationFirstName() {
-        ArrayList<String> listAllFirstNames = new ArrayList<>(writeFromFileTxtToCollection(fileSurName));
+        ArrayList<String> listAllFirstNames = new ArrayList<>(writeFromFileTxtToCollection(fileName));
         int randomNameNumber = random.nextInt(listAllFirstNames.size());
         return listAllFirstNames.get(randomNameNumber);
     }
@@ -316,7 +323,7 @@ public class MyFaKer {
     }
 
     //запись текста в txt файл с указанием количества слов в тексте и с указанием форматирования
-    public void writingWordsToTxtFile (int totalNumberWordsInText, int numberWordsPerLine) {
+    public void writingWordsToTxtFile(int totalNumberWordsInText, int numberWordsPerLine) {
         List<String> listText = new ArrayList<>(creationTextWords(totalNumberWordsInText));
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileOutputText))) {
             if (numberWordsPerLine != 0) {
@@ -342,21 +349,9 @@ public class MyFaKer {
                 }
             }
             System.out.println();
-            System.out.println("Данные успешно записаны в файл "+ fileOutputText);
+            System.out.println("Данные успешно записаны в файл " + fileOutputText);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
-
-
-
-
-
-
-
-
-
-        
-
-
