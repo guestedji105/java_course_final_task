@@ -9,16 +9,15 @@ import java.util.Random;
 
 public class MyFaKer {
 
-
     String[] nameDomen = new String[]{".com", ".org.net", ".edu", ".gov", ".mil", ".info", ".io", ".co", ".me", ".blog", ".app", ".store", ".tv", ".dev", ".design", ".io", ".online", ".app", ".ca"};
     char[] specialCharacter = new char[]{'-', '.', '_'};
     public static String fileName = "src/Kursach/name_english.txt";
     public static String fileSurName = "src/Kursach/surname_english.txt";
     public String fileCountryCode = "src/Kursach/country_code.txt";
     public static String fileText = "src/Kursach/Text_Book.txt";
-    public String fileOutputText = "src/Kursach/outputText.txt";
-    public String fileCsvEmail = "src/Kursach/email.csv";
-    public String outputCsvFileTable = "src/Kursach/outputCsvTable.csv";
+    public String fileOutputText = "src/Kursach/output_Text.txt";
+    public String fileCsvEmail = "src/Kursach/output_email.csv";
+    public String outputCsvFileTable = "src/Kursach/output_CsvTable.csv";
     Random random = new Random();
 
 
@@ -30,7 +29,7 @@ public class MyFaKer {
             List<String> header = new ArrayList<>();
             ArrayList<String> listTable = new ArrayList<>();
             int counterLine = 0;
-            // Определите данные для записи в файл
+
             if (willMailboxes == 1) {
                 header.add("email");
                 counterLine++;
@@ -77,11 +76,9 @@ public class MyFaKer {
                 header.add("text");
                 counterLine++;
                 for (int i = 0; i < numberOfLine; i++) {
-                    listTable.add(creationTextCharacters(lengthText).toString()); //нужно дописать метод
+                    listTable.add(creationTextCharacters(lengthText).toString());
                 }
             }
-            //System.out.println(listTable);
-
             for (int i = 0; i < header.size(); i++) {
                 writer.append(header.get(i));
                 if (i < header.size() - 1) {
@@ -89,7 +86,6 @@ public class MyFaKer {
                 }
             }
             writer.append("\n");
-
             for (int i = 0; i < numberOfLine; i++) {
                 int n = i;
                 for (int j = 0; j < counterLine; j++) {
@@ -314,12 +310,32 @@ public class MyFaKer {
         return allText;
     }
 
-    //создание рандомного текста (условие - колличество символов) !!!ДОПИСАТЬ!!!
-    public List<String> creationTextCharacters(int totalCharactersInText) {
-        List<String> allText = writeFromFileTxtToCollection(fileText);
+    //создание рандомного текста (условие - количество символов)
+    public StringBuilder creationTextCharacters(int totalCharactersInText) {
+        StringBuilder sbtext = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileText));
+             BufferedReader reader1 = new BufferedReader(new FileReader(fileText))
+        ) {
+            int character;
+            int fileSize = reader1.lines().mapToInt(String::length).sum();
+            int randomPosition;
+            do {
+                randomPosition = (int) random.nextLong(fileSize - 1);
+            }
+            while (randomPosition + totalCharactersInText > fileSize);
 
+            reader.skip(randomPosition);
 
-        return allText;
+            int countCharactersRead = 0;
+
+            while ((character = reader.read()) != -1 && countCharactersRead < totalCharactersInText) {
+                sbtext.append(Character.toString(character));
+                countCharactersRead++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sbtext;
     }
 
     //запись текста в txt файл с указанием количества слов в тексте и с указанием форматирования
@@ -347,6 +363,19 @@ public class MyFaKer {
                         writer.write(listText.get(i));
                     }
                 }
+            }
+            System.out.println();
+            System.out.println("Данные успешно записаны в файл " + fileOutputText);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Запись в файл текста из StringBuilder
+    public void writingTextToTxtFile(StringBuilder sbText) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileOutputText))) {
+            for (int i = 0; i < sbText.length(); i++) {
+                writer.write(sbText.charAt(i));
             }
             System.out.println();
             System.out.println("Данные успешно записаны в файл " + fileOutputText);

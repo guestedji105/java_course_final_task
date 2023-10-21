@@ -6,7 +6,7 @@ public class Menu {
     final static String ITALIC_START = "\u001B[3m";
     final static String ITALIC_END = "\u001B[0m";
     Scanner scannerInt = new Scanner(System.in);
-    Scanner scannerSting = new Scanner(System.in);
+
     MyFaKer myFaKer = new MyFaKer();
 
     void textMainMenu() {
@@ -83,22 +83,39 @@ public class Menu {
         do {
             System.out.println("Генерация CSV файла со случайными e-mail");
             System.out.print("Введите количество e-mail - ");
-             totalNumberEMail = scanner.nextInt();
+            totalNumberEMail = scanner.nextInt();
             myFaKer.writingEMailToCsv(totalNumberEMail, myFaKer.fileCsvEmail);
 
-        } while (totalNumberEMail<0);
+        } while (totalNumberEMail < 0);
     }
 
     void requestNumberStringAndTxtFileGeneration() {
         Scanner scanner = new Scanner(System.in);
+        int choice;
         System.out.println("Генерация txt файла с текстом произвольной длины.");
-        System.out.print("Введите размер текста в словах -");
-        int totalNumberWordsInText = scanner.nextInt();
-        System.out.print("Если сгенерированный текст нужно отформатировать\n " +
-                "то укажите количество слов в строке, иначе введите 0 -");
-        int numberWordsPerLine = scanner.nextInt();
-        myFaKer.writingWordsToTxtFile(totalNumberWordsInText,numberWordsPerLine);
+
+        System.out.println("""
+                Существует два варианта генерации произвольного текста
+                1 - генерация по количеству символов в тексте
+                2 - генерация по количеству слов в тексте
+                Сделайте ваш выбор\s""");
+        choice = scanner.nextInt();
+        while (choice < 1 || choice > 2) {
+            System.out.println("Сделайте правильный выбор");
+            choice = scanner.nextInt();
+        }
+        if (choice == 1) {
+            System.out.println("Введите количество символов в новом тексте");
+            int totalCharactersInText = scanner.nextInt();
+            myFaKer.writingTextToTxtFile(myFaKer.creationTextCharacters(totalCharactersInText));
+
+        } else {
+            System.out.print("Введите размер текста в словах -");
+            int totalNumberWordsInText = scanner.nextInt();
+            System.out.print("Если сгенерированный текст нужно отформатировать\n " +
+                    "то укажите количество слов в строке, иначе введите 0 -");
+            int numberWordsPerLine = scanner.nextInt();
+            myFaKer.writingWordsToTxtFile(totalNumberWordsInText, numberWordsPerLine);
+        }
     }
-
-
 }
