@@ -41,7 +41,7 @@ public class CSVDataGenerator {
     }
 
     private static String generateRandomText(int length) {
-        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String characters = "abcd efghij klmnop qrstuv wxyzABCD EFGHIJK LMNOPQRS TUVWXYZ";
         Random random = new Random();
         StringBuilder text = new StringBuilder();
 
@@ -73,7 +73,7 @@ public class CSVDataGenerator {
     }
 
     private static String generateRandomToken(int length) {
-        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        String characters = "abcde fghij klmnop qrstuv wxyzABCD EFGHIJK LMNOPQR STUVWXYZ01234 56789";
         Random random = new Random();
         StringBuilder token = new StringBuilder();
 

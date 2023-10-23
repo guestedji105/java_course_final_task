@@ -8,7 +8,7 @@ public class EmailCSVGenerating {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Email CSV Generator");
-        System.out.print("Enter the number of email addresses to generate: ");
+        System.out.print("Enter the number of email addresses to generate:  ");
         int numEmails = scanner.nextInt();
         scanner.nextLine(); // Consume newline
 
