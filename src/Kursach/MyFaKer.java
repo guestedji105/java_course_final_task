@@ -1,5 +1,7 @@
 package Kursach;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -137,7 +139,7 @@ public class MyFaKer {
         numberPhone.append(randomCode);
         int lenght = 14 - numberPhone.length();
         for (int i = 0; i < lenght; i++) {
-            numberPhone.append(creationRandomNumber());
+            numberPhone.append(creationRandomNumberFom0To9());
         }
         return numberPhone.toString();
     }
@@ -157,7 +159,7 @@ public class MyFaKer {
     }
 
     //генерация случайного числа от 0 до 9
-    public int creationRandomNumber() {
+    public int creationRandomNumberFom0To9() {
         return random.nextInt(10);
     }
 
@@ -182,7 +184,7 @@ public class MyFaKer {
                     newWord.append(creationUpperCaseLetter());
                 }
             } else {
-                newWord.append(creationRandomNumber());
+                newWord.append(creationRandomNumberFom0To9());
             }
         }
         return new String(newWord);
@@ -201,7 +203,7 @@ public class MyFaKer {
             if (randomNumber < 70) {
                 newWord.append(creationLoverCaseLetter());
             } else if (randomNumber < 85) {
-                newWord.append(creationRandomNumber());
+                newWord.append(creationRandomNumberFom0To9());
             } else if (randomNumber < 95) {
                 newWord.append(creationUpperCaseLetter());
             } else {
@@ -240,17 +242,17 @@ public class MyFaKer {
         }
     }
 
-    //генерация большой буквы
+    //генерация случайной буквы верхнего регистра (A-Z)
     public char creationUpperCaseLetter() {
-        return (char) (random.nextInt(26) + 'A'); // Генерируем случайную букву верхнего регистра (A-Z)
+        return (char) (random.nextInt(26) + 'A');
     }
 
-    //генерация маленькой буквы
+    //генерация случайной буквы нижнего регистра (a-z)
     public char creationLoverCaseLetter() {
-        return (char) (random.nextInt(26) + 'a'); // Генерируем случайную букву нижнего регистра (A-Z)
+        return (char) (random.nextInt(26) + 'a');
     }
 
-    //генерация слова (для предложения)
+    //генерация слова (для предложения) определенной длинны с маленькой буквы
     public String creationWord(int lengthWord) {
         char[] newWord = new char[lengthWord];
         for (int i = 0; i < lengthWord; i++) {
@@ -259,7 +261,7 @@ public class MyFaKer {
         return new String(newWord);
     }
 
-    //генерация Первого слова (для предложения)
+    //генерация Первого слова (для предложения) с Большой буквы
     public String creationFirstWord(int lengthWord) {
         char[] newWord = new char[lengthWord];
         for (int i = 0; i < lengthWord; i++) {
@@ -272,7 +274,7 @@ public class MyFaKer {
         return new String(newWord);
     }
 
-    //генерация последнего слова (для предложения)
+    //генерация последнего слова (для предложения) с маленькой буквы в конце точка
     public String creationLastWord(int lengthWord) {
         return creationWord(lengthWord) + ".";
     }
@@ -293,7 +295,7 @@ public class MyFaKer {
     }
 
     //создание текста который зависит от кол.слов
-    public List<String> creationTextWords(int totalNumberWordsInText) { //создание всего текста
+    public List<String> creationTextWords(int totalNumberWordsInText) {
         ArrayList<String> allText = new ArrayList<>();
         int numberWordsInSentence;
         int minWordInSentence = 2;
@@ -372,7 +374,7 @@ public class MyFaKer {
     }
 
     // Запись в файл текста из StringBuilder
-    public void writingTextToTxtFile(StringBuilder sbText) {
+    public void writingTextToTxtFile(@NotNull StringBuilder sbText) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileOutputText))) {
             for (int i = 0; i < sbText.length(); i++) {
                 writer.write(sbText.charAt(i));
